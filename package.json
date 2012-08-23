@@ -1,9 +1,10 @@
 {
 	"name": "enhanced-require",
-	"version": "0.1.0",
+	"version": "0.2.0",
 	"author": "Tobias Koppers @sokra",
-	"description": "Enhance the require function in node.js with support for loaders which preprocess files. This is a standalone polyfill for features of webpack.",
+	"description": "Enhance the require function in node.js with support for loaders which preprocess files and really async require (AMD).",
 	"dependencies": {
+		"enhanced-resolve": "0.2.x"
 	},
 	"licenses": [
 		{
@@ -15,10 +16,11 @@
 		"mocha": "*",
 		"should": "*"
 	},
+	"main": "lib/require",
 	"engines": {
-		"node":  ">=0.8"
+		"node":  ">=0.6"
 	},
-	"homepage": "http://github.com/sokra/enhanced-require",
+	"homepage": "http://github.com/webpack/enhanced-require",
 	"scripts": {
 		"test": "node node_modules/mocha/bin/_mocha --reporter spec"
 	},
