@@ -1,6 +1,6 @@
 {
 	"name": "enhanced-require",
-	"version": "0.3.0",
+	"version": "0.3.1",
 	"author": "Tobias Koppers @sokra",
 	"description": "Enhance the require function in node.js with support for loaders which preprocess files and really async require (AMD).",
 	"dependencies": {
