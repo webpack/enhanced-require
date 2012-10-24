@@ -22,10 +22,18 @@ describe("require-recusive", function() {
 		clean(req.sourceCache);
 	});
 
-	it("should enhance submodules", function() {
-		var a = req("./fixtures/recursive1");
+	it("should enhance submodules (one level)", function() {
+		var a = req("./fixtures/recursive2");
 		should.exist(a);
 		a.should.have.property("amd").be.equal(req.amd);
+		a.should.have.property("enhanced").be.equal(req.enhanced);
+	});
+
+	it("should enhance submodules (two levels)", function() {
+		var a = req("./fixtures/recursive3");
+		should.exist(a);
+		a.should.have.property("amd").be.equal(req.amd);
+		a.should.have.property("enhanced").be.equal(req.enhanced);
 	});
 
 });

@@ -15,9 +15,10 @@ describe("require-not-recusive", function() {
 	});
 
 	it("should not enhance submodules", function() {
-		var a = req("./fixtures/recursive1");
+		var a = req("./fixtures/recursive2");
 		should.exist(a);
 		a.should.not.have.property("amd");
+		a.should.not.have.property("enhanced");
 	});
 
 });
