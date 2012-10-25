@@ -2,14 +2,8 @@ var should = require("should");
 var reqFactory = require("../");
 
 describe("require-recusive", function() {
-	var req = reqFactory(module);
-
-	before(function() {
-		reqFactory.options.recursive = true;
-	});
-
-	after(function() {
-		reqFactory.options.recursive = false;
+	var req = reqFactory(module, {
+		recursive: true
 	});
 
 	beforeEach(function() {

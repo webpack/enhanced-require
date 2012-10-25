@@ -15,7 +15,8 @@
 	],
 	"devDependencies": {
 		"mocha": "*",
-		"should": "*"
+		"should": "*",
+		"raw-loader": "0.2.x"
 	},
 	"main": "lib/require",
 	"engines": {
