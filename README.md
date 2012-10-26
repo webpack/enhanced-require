@@ -6,8 +6,11 @@ More features for node.js require.
 * `require.ensure`
 * AMD `require`, `define` (from require.js)
 * `require.context`
+* Hot Code Replacement
 
 Asynchron require functions are **really** async. They do not use the sync node.js require, but use a async resolving and async readFile.
+
+## Single module
 
 Add this line to a node.js module to activate the enhanced features in that module:
 
@@ -45,13 +48,31 @@ require.define(["./aDep"], function(aDep) {
 
 // use AMD require
 require(["./bDep"], function(bDep) {
-	bDep.run();
+	bDep.doSomething();
 });
 ```
 
+## Complete application
+
+Create a seperate entry module and require your original entry module:
+
+``` javascript
+require = require("enhanced-require")(module, {
+	recursive: true, // enable for all modules
+	hot: true, // enable hot code replacement
+	watch: true // watch for changes
+});
+
+require("./startup");
+```
+
+You can use all features in `startup.js` and all required modules.
+
+For hot code reloading you need to follow the [hot code reloading spec](https://github.com/webpack/enhanced-require/wiki/HCR-Spec).
+
 ## Future Plans
 
-* `require("enhanced-require/install")` enables support for all modules.
+* cli tool
 
 ## License
 
