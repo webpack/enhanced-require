@@ -5,7 +5,8 @@
 	"description": "Enhance the require function in node.js with support for loaders which preprocess files and really async require (AMD). Enables Hot Code Replacement.",
 	"dependencies": {
 		"enhanced-resolve": "0.2.x",
-		"clone": "0.0.x"
+		"clone": "0.0.x",
+		"buffer-equal": "0.0.x"
 	},
 	"licenses": [
 		{
