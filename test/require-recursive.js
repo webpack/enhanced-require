@@ -30,4 +30,10 @@ describe("require-recusive", function() {
 		a.should.have.property("enhanced").be.equal(req.enhanced);
 	});
 
+	it("should handle circular requires", function() {
+		var c = req("./fixtures/circular1");
+		should.exist(c);
+		c.should.be.eql({ two: { one: 1 } });
+	});
+
 });
