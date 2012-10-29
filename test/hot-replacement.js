@@ -179,5 +179,47 @@ describe("hot-replacement", function() {
 		}, 100);
 	});
 
+	it("should wait for apply if applyOnUpdate = false", function(done) {
+		var req = reqFactory(module, {
+			hot: true,
+			recursive: true,
+			watch: true,
+			watchDelay: 10
+		});
+
+		var list = req("./fixtures/hot/counter");
+		req.hot.setApplyOnUpdate(false);
+		list.should.be.eql([1]);
+		setTimeout(function() {
+			list.should.be.eql([1]);
+			writeCounter(2);
+			setTimeout(function() {
+				list.should.be.eql([1]);
+				req.hot.status().should.be.eql("ready");
+				req.hot.apply(function(err, outdatedModules) {
+					should.not.exist(err);
+					should.exist(outdatedModules);
+					outdatedModules.should.have.property("length").be.eql(1);
+					outdatedModules[0].id.should.be.eql(counterValuePath);
+					req.hot.status().should.be.eql("watch");
+					list.should.be.eql([1, -1, 2]);
+					writeCounter(3);
+					setTimeout(function() {
+						req.hot.status().should.be.eql("ready");
+						req.hot.apply(function(err, outdatedModules) {
+							should.not.exist(err);
+							should.exist(outdatedModules);
+							outdatedModules.should.have.property("length").be.eql(1);
+							outdatedModules[0].id.should.be.eql(counterValuePath);
+							req.hot.status().should.be.eql("watch");
+							list.should.be.eql([1, -1, 2, -2, 3]);
+							done();
+						});
+					}, 100);
+				});
+			}, 100);
+		}, 100);
+	});
+
 
 });
