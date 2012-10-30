@@ -31,8 +31,7 @@ describe("hot-replacement", function() {
 		list.should.be.eql([1]);
 		req.hot.check(function(err, updatedModules) {
 			if(err) throw err;
-			should.exist(updatedModules);
-			updatedModules.should.be.eql([]);
+			should.not.exist(updatedModules);
 			list.should.be.eql([1]);
 			writeCounter(2);
 			list.should.be.eql([1]);
@@ -43,8 +42,7 @@ describe("hot-replacement", function() {
 				list.should.be.eql([1, -1, 2]);
 				req.hot.check(function(err, updatedModules) {
 					if(err) throw err;
-					should.exist(updatedModules);
-					updatedModules.should.be.eql([]);
+					should.not.exist(updatedModules);
 					list.should.be.eql([1, -1, 2]);
 					writeCounter(3);
 					req.hot.check(function(err, updatedModules) {
@@ -69,8 +67,7 @@ describe("hot-replacement", function() {
 		list.should.be.eql([1]);
 		req.hot.check(function(err, updatedModules) {
 			if(err) throw err;
-			should.exist(updatedModules);
-			updatedModules.should.be.eql([]);
+			should.not.exist(updatedModules);
 			list.should.be.eql([1]);
 			writeCounter(2);
 			list.should.be.eql([1]);
@@ -81,8 +78,7 @@ describe("hot-replacement", function() {
 				list.should.be.eql([1, -1, 2]);
 				req.hot.check(function(err, updatedModules) {
 					if(err) throw err;
-					should.exist(updatedModules);
-					updatedModules.should.be.eql([]);
+					should.not.exist(updatedModules);
 					list.should.be.eql([1, -1, 2]);
 					writeCounter(3);
 					req.hot.check(function(err, updatedModules) {
@@ -97,7 +93,7 @@ describe("hot-replacement", function() {
 		});
 	});
 
-	it("should not accept a bubbling update by manual sync check", function(done) {
+	it("should not accept a bubbling update by manual check", function(done) {
 		var req = reqFactory(module, {
 			hot: true,
 			recursive: true
@@ -109,7 +105,7 @@ describe("hot-replacement", function() {
 			should.exist(err);
 			should.not.exist(updatedModules);
 			err.should.be.instanceOf(Error);
-			/bubble/.test(err.toString()).should.be.ok;
+			/bubbling/.test(err.toString()).should.be.ok;
 			done();
 		});
 	});
@@ -124,8 +120,7 @@ describe("hot-replacement", function() {
 		list.should.be.eql(["module.exports = 1"]);
 		req.hot.check(function(err, updatedModules) {
 			if(err) throw err;
-			should.exist(updatedModules);
-			updatedModules.should.be.eql([]);
+			should.not.exist(updatedModules);
 			list.should.be.eql(["module.exports = 1"]);
 			writeCounter(2);
 			list.should.be.eql(["module.exports = 1"]);
@@ -136,8 +131,7 @@ describe("hot-replacement", function() {
 				list.should.be.eql(["module.exports = 1", "MODULE.EXPORTS = 1", "module.exports = 2"]);
 				req.hot.check(function(err, updatedModules) {
 					if(err) throw err;
-					should.exist(updatedModules);
-					updatedModules.should.be.eql([]);
+					should.not.exist(updatedModules);
 					list.should.be.eql(["module.exports = 1", "MODULE.EXPORTS = 1", "module.exports = 2"]);
 					writeCounter(3);
 					req.hot.check(function(err, updatedModules) {
