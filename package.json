@@ -17,9 +17,11 @@
 	"devDependencies": {
 		"mocha": "*",
 		"should": "*",
-		"raw-loader": "0.2.x"
+		"raw-loader": "0.2.x",
+		"jade-loader": "0.2.x"
 	},
 	"main": "lib/require",
+	"bin": "bin/enhanced-require-hot-watch.js",
 	"engines": {
 		"node":  ">=0.6"
 	},
