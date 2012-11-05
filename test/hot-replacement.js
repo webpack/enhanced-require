@@ -166,6 +166,7 @@ describe("hot-replacement", function() {
 					writeCounter(3);
 					setTimeout(function() {
 						list.should.be.eql([1, -1, 2, -2, 3]);
+						req.hot.stop();
 						done();
 					}, 100);
 				}, 100);
@@ -207,6 +208,7 @@ describe("hot-replacement", function() {
 							outdatedModules[0].id.should.be.eql(counterValuePath);
 							req.hot.status().should.be.eql("watch");
 							list.should.be.eql([1, -1, 2, -2, 3]);
+							req.hot.stop();
 							done();
 						});
 					}, 100);
