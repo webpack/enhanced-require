@@ -6,20 +6,25 @@ More features for node.js require.
 * `require.ensure`
 * AMD `require`, `define` (from require.js)
 * `require.context`
-* Hot Code Replacement
+* [Hot Code Replacement](https://github.com/webpack/enhanced-require/wiki/HCR-Spec)
+* module substitutions for mocking
 
 Asynchron require functions are **really** async. They do not use the sync node.js require, but use a async resolving and async readFile.
 
-## Single module
-
-Add this line to a node.js module to activate the enhanced features in that module:
+## Create a enhanced require function
 
 ``` javascript
-require = require("enhanced-require")(module);
+var myRequire = require("enhanced-require")(module, {
+	// options
+	recursive: true // enable for all modules recursivly
+	// This replaces the original require function in loaded modules
+});
 
-// and optionally if your want require.js style defines:
-if(typeof define != "function") var define = require.define;
+// startup your application
+myRequire("./startup");
 ```
+
+## Usage
 
 Than you can use them:
 
@@ -52,23 +57,84 @@ require(["./bDep"], function(bDep) {
 });
 ```
 
-## Complete application
-
-Create a seperate entry module and require your original entry module:
+## Hot Code Replacement
 
 ``` javascript
-require = require("enhanced-require")(module, {
+require("enhanced-require")(module, {
 	recursive: true, // enable for all modules
 	hot: true, // enable hot code replacement
 	watch: true // watch for changes
-});
-
-require("./startup");
+})("./startup");
 ```
 
-You can use all features in `startup.js` and all required modules.
-
 For hot code reloading you need to follow the [hot code reloading spec](https://github.com/webpack/enhanced-require/wiki/HCR-Spec).
+
+## Testing/Mocking
+
+``` javascript
+var er = require("enhanced-require");
+it("should read the config option", function(done) {
+	var subject = er(module, {
+		recursive: true,
+		substitutions: {
+			// specify the exports of a module directly
+			"../lib/config.json": {
+				"test-option": { value: 1234 }
+			}
+		},
+		substitutionFactories: {
+			// specify lazy generated exports of a module
+			"../lib/otherConfig.json": function(require) {
+				// export the same object as "config.json"
+				return require("../lib/config.json");
+			}
+		}
+	})("../lib/subject");
+
+	var result = subject.getConfigOption("test-option");
+	should.exist(result);
+	result.should.be.eql({ value: 1234 });
+});
+```
+
+## Options
+
+``` javascript
+{
+	recursive: false,
+	// replace require function in required modules with enhanced require method
+
+	resolve: {
+		// ...
+		// see enhanced-resolve
+		// https://github.com/webpack/enhanced-resolve
+	},
+	
+	substitutions: {},
+	substitutionFactories: {},
+	// See above
+	// Replace modules with mocks
+	// keys are resolved and have to exist
+
+	amd: {},
+	// The require.amd object
+
+	enhanced: {},
+	// The require.enhanced object
+
+	loader: {},
+	// additional stuff in the loaderContext
+
+	hot: false,
+	// enable hot code replacement
+
+	watch: false,
+	// Watch for file changes and issue hot replacement
+
+	watchDelay: 400,
+	// Time to summarize changes for watching
+}
+```
 
 ## Future Plans
 
