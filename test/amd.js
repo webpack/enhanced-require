@@ -95,4 +95,21 @@ describe("amd", function() {
 		if(sync) throw new Error("define is not async");
 	});
 
+	it("should define a module with require and exports dependencies", function(done) {
+		var sync = false;
+		define("amd", ["./fixtures/file", "./fixtures/outer.js", "require", "exports"], function(file, outer, req2, exports) {
+			sync = true;
+			file.should.be.eql({value: "file"});
+			outer.should.be.eql({inner: "inner"});
+			req2.should.be.equal(req);
+			exports.ovhweghr = 3;
+			process.nextTick(function() {
+				module.exports.should.be.equal(exports);
+				module.exports.ovhweghr.should.be.equal(3);
+				done();
+			});
+		});
+		if(sync) throw new Error("define is not async");
+	});
+
 });
