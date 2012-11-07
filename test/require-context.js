@@ -5,7 +5,7 @@ var reqFactory = require("../");
 describe("require-context", function() {
 	var req = reqFactory(module);
 	var context = req.context("./fixtures")
-	
+
 	beforeEach(function() {
 		function clean(obj) {
 			for(var name in obj)
@@ -39,5 +39,35 @@ describe("require-context", function() {
 			context("./notExists.js");
 		}).should.throw(/Module ".*?" not found/);
 	});
-	
+
+	it("should be able to use a loader in require.context", function() {
+		var context = req.context("raw!./fixtures");
+		var a = context("./directory/file2");
+		a.should.be.eql("module.exports = {value: \"file2\"};");
+	});
+
+	it("should be able to use context.keys()", function() {
+		var context = req.context("./fixtures/graph");
+		should.exist(context.keys);
+		context.keys.should.be.a("function");
+		var keys = context.keys();
+		should.exist(keys);
+		keys.should.be.eql([
+			"./a.js",
+			"./b.js"
+		]);
+	});
+
+	it("should be able to use context.keys() with loader", function() {
+		var context = req.context("raw!./fixtures/graph");
+		should.exist(context.keys);
+		context.keys.should.be.a("function");
+		var keys = context.keys();
+		should.exist(keys);
+		keys.should.be.eql([
+			"./a.js",
+			"./b.js"
+		]);
+	});
+
 });
