@@ -4,7 +4,7 @@ var reqFactory = require("../");
 
 describe("modules-async", function() {
 	var req = reqFactory(module);
-	
+
 	beforeEach(function() {
 		function clean(obj) {
 			for(var name in obj)
@@ -14,11 +14,11 @@ describe("modules-async", function() {
 		clean(req.contentCache);
 		clean(req.sourceCache);
 	});
-	
+
 	it("should ensure the modules", function(done) {
-		
+
 		var id = path.join(__dirname, "fixtures", "file.js");
-		
+
 		req.ensure(["./fixtures/file", "./fixtures/inner"], function(req2) {
 			should.exist(req2);
 			req2.should.be.a("function");
@@ -27,7 +27,25 @@ describe("modules-async", function() {
 			file.should.be.eql({value: "file"});
 			done();
 		});
-		
+
+	});
+
+	it("should ensure the modules", function(done) {
+
+		var id = path.join(__dirname, "fixtures", "file.js");
+
+		req.ensure(["./fixtures/file", "./fixtures/file?1"], function(req2, err) {
+			should.exist(req2);
+			req2.should.be.a("function");
+			should.exist(req2.sourceCache[id]);
+			should.exist(req2.sourceCache[id+"?1"]);
+			var file = req2(id);
+			var file1 = req2(id+"?1");
+			file.should.be.eql({value: "file"});
+			file1.should.be.eql({value: "file"});
+			done();
+		});
+
 	});
 
 	it("should be executed synchron if empty list", function() {
@@ -39,5 +57,5 @@ describe("modules-async", function() {
 		});
 		executed.should.be.ok;
 	});
-	
+
 });
