@@ -1,10 +1,13 @@
 #!/usr/bin/env node
 
 var path = require("path");
-var file = process.argv.splice(2, 1);
+var file = process.argv.splice(2, 1)[0].split("!");
 
-require("../lib/require")(module, {
+file.push(path.resolve(file.pop()));
+
+console.dir(file);
+require("../lib/require")(process.cwd(), {
 	recursive: true,
 	hot: true,
 	watch: true
-})(path.resolve(file[0]));
+})(file.join("!"));
