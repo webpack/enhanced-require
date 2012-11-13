@@ -3,13 +3,7 @@
 ## Startup
 
 ```
-node ../../bin/enhanced-require-hot-watch server.js
-```
-
-Or if you have `enhanced-require` installed globally:
-
-```
-enhanced-require-hot-watch server.js
+node ../../bin/hot-watch server.js
 ```
 
 ## Action

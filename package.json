@@ -1,6 +1,6 @@
 {
 	"name": "enhanced-require",
-	"version": "0.4.0-beta16",
+	"version": "0.4.0-beta17",
 	"author": "Tobias Koppers @sokra",
 	"description": "Enhance the require function in node.js with support for loaders which preprocess files and really async require (AMD). Enables Hot Code Replacement.",
 	"dependencies": {
@@ -21,7 +21,7 @@
 		"jade-loader": "0.2.x"
 	},
 	"main": "lib/require",
-	"bin": "bin/enhanced-require-hot-watch.js",
+	"bin": "bin/enhanced-require.js",
 	"engines": {
 		"node":  ">=0.6"
 	},
