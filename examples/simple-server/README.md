@@ -6,6 +6,12 @@
 node ../../bin/hot-watch server.js
 ```
 
+Or if you have `enhanced-require` installed globally:
+
+```
+enhanced-require-hot-watch server.js
+```
+
 ## Action
 
 It opens a server at `http://localhost:8080` which serves the page.
