@@ -15,13 +15,16 @@
 		}
 	],
 	"devDependencies": {
-		"mocha": "*",
-		"should": "*",
+		"mocha": "1.3.x",
+		"should": "1.1.x",
 		"raw-loader": "0.2.x",
 		"jade-loader": "0.2.x"
 	},
 	"main": "lib/require",
-	"bin": "bin/enhanced-require.js",
+	"bin": {
+		"enhanced-require": "bin/enhanced-require.js",
+		"enhanced-require-hot-watch": "bin/hot-watch.js"
+	},
 	"engines": {
 		"node":  ">=0.6"
 	},
