@@ -12,8 +12,9 @@ describe("amd", function() {
 				delete obj[name];
 		}
 		clean(req.cache);
-		clean(req.contentCache);
-		clean(req.sourceCache);
+		clean(req.preCache);
+		req.__root.fileSystem.purge();
+		req.__root.syncFileSystem.purge();
 	});
 
 	it("should require a module", function(done) {

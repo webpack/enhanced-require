@@ -1,10 +1,11 @@
 {
 	"name": "enhanced-require",
-	"version": "0.4.2",
+	"version": "0.5.0",
 	"author": "Tobias Koppers @sokra",
 	"description": "Enhance the require function in node.js with support for loaders which preprocess files and really async require (AMD). Enables Hot Code Replacement.",
 	"dependencies": {
-		"enhanced-resolve": "0.4.x",
+		"enhanced-resolve": "0.5.x",
+		"webpack-core": "0.5.x",
 		"clone": "0.0.x",
 		"buffer-equal": "0.0.x"
 	},
@@ -17,8 +18,8 @@
 	"devDependencies": {
 		"mocha": "1.3.x",
 		"should": "1.1.x",
-		"raw-loader": "0.2.x",
-		"jade-loader": "0.2.x"
+		"raw-loader": "0.5.x",
+		"jade-loader": "0.5.x"
 	},
 	"main": "lib/require",
 	"bin": {
@@ -31,6 +32,5 @@
 	"homepage": "http://github.com/webpack/enhanced-require",
 	"scripts": {
 		"test": "node node_modules/mocha/bin/_mocha --reporter spec"
-	},
-	"license": "MIT"
+	}
 }

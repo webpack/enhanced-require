@@ -24,8 +24,7 @@ describe("commonjs", function() {
 		req.should.have.property("ensure").be.a("function");
 		req.should.have.property("resolve").be.a("function");
 		req.should.have.property("cache").be.a("object");
-		req.should.have.property("contentCache").be.a("object");
-		req.should.have.property("sourceCache").be.a("object");
+		req.should.have.property("preCache").be.a("object");
 		
 	});
 	

@@ -24,8 +24,8 @@ describe("commonjs-loaders", function() {
 		outerLoaded.should.have.property("loader").be.a("object");
 		outerLoaded.should.have.property("async").be.eql(false);
 		outerLoaded.loader.should.have.property("request").be.eql(req.resolve("./fixtures/loader!./fixtures/outer"));
-		outerLoaded.loader.should.have.property("context").be.eql(__dirname);
-		outerLoaded.loader.should.have.property("filenames").be.eql([req.resolve("./fixtures/outer")]);
+		outerLoaded.loader.should.have.property("context").be.eql(path.join(__dirname, "fixtures"));
+		outerLoaded.loader.should.have.property("resource").be.eql(req.resolve("./fixtures/outer"));
 	});
 
 	it("should execute a loader without resource", function() {
@@ -34,8 +34,8 @@ describe("commonjs-loaders", function() {
 		loaded.should.have.property("loader").be.a("object");
 		loaded.should.have.property("async").be.eql(false);
 		loaded.loader.should.have.property("request").be.eql(req.resolve("./fixtures/loader!"));
-		loaded.loader.should.have.property("context").be.eql(__dirname);
-		loaded.loader.should.have.property("filenames").be.eql([]);
+		loaded.loader.should.have.property("context").be.eql(null);
+		loaded.loader.should.have.property("resource").be.eql("");
 	});
 
 	it("should execute a loader with only query", function() {
@@ -46,8 +46,10 @@ describe("commonjs-loaders", function() {
 		loaded.loader.should.have.property("request").be.eql(req.resolve("./fixtures/loader?query2!?query1"));
 		loaded.loader.should.have.property("resourceQuery").be.eql("?query1");
 		loaded.loader.should.have.property("query").be.eql("?query2");
-		loaded.loader.should.have.property("context").be.eql(__dirname);
-		loaded.loader.should.have.property("filenames").be.eql([]);
+		loaded.loader.should.have.property("context").be.eql(null);
+		loaded.loader.should.have.property("resourcePath").be.eql("");
+		loaded.loader.should.have.property("resource").be.eql("?query1");
+		loaded.loader.should.have.property("resourceQuery").be.eql("?query1");
 	});
 
 });
