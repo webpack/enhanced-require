@@ -3,7 +3,6 @@ var reqFactory = require("../");
 
 describe("require-substitutions", function() {
 	var req = reqFactory(module, {
-		recursive: true,
 		substitutions: {
 			"./fixtures/recursive1": "substitution1",
 			"./fixtures/random": 0

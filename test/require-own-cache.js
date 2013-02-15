@@ -51,9 +51,7 @@ describe("require-own-cache", function() {
 	});
 
 	it("should be able to combine recursive with a own cache", function() {
-		var req = reqFactory(module, {
-			recursive: true
-		});
+		var req = reqFactory(module);
 
 		var a = req("./fixtures/recursiveRandom2");
 		var b = req("./fixtures/recursiveRandom");

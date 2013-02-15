@@ -5,6 +5,8 @@ var reqFactory = require("../");
 
 describe("hot-replacement", function() {
 
+	this.timeout(10000);
+
 	var counterValuePath = path.join(__dirname, "fixtures", "hot", "counter-value.js");
 
 	beforeEach(function() {
@@ -23,8 +25,7 @@ describe("hot-replacement", function() {
 
 	it("should accept a simple update by manual check", function(done) {
 		var req = reqFactory(module, {
-			hot: true,
-			recursive: true
+			hot: true
 		});
 
 		var list = req("./fixtures/hot/counter");
@@ -59,8 +60,7 @@ describe("hot-replacement", function() {
 
 	it("should accept a indirect update by manual check", function(done) {
 		var req = reqFactory(module, {
-			hot: true,
-			recursive: true
+			hot: true
 		});
 
 		var list = req("./fixtures/hot/counter-indirect");
@@ -95,25 +95,25 @@ describe("hot-replacement", function() {
 
 	it("should not accept a bubbling update by manual check", function(done) {
 		var req = reqFactory(module, {
-			hot: true,
-			recursive: true
+			hot: true
 		});
 
 		var fail = req("./fixtures/hot/not-accepted");
-		writeCounter(2);
-		req.hot.check(function(err, updatedModules) {
-			should.exist(err);
-			should.not.exist(updatedModules);
-			err.should.be.instanceOf(Error);
-			/bubbling/.test(err.toString()).should.be.ok;
-			done();
-		});
+		setTimeout(function() {
+			writeCounter(2);
+			req.hot.check(function(err, updatedModules) {
+				should.exist(err);
+				should.not.exist(updatedModules);
+				err.should.be.instanceOf(Error);
+				/bubbling/.test(err.toString()).should.be.ok;
+				done();
+			});
+		}, 1000);
 	});
 
 	it("should accept a update of a loaded module by manual check", function(done) {
 		var req = reqFactory(module, {
-			hot: true,
-			recursive: true
+			hot: true
 		});
 
 		var list = req("./fixtures/hot/loader");
@@ -149,9 +149,8 @@ describe("hot-replacement", function() {
 	it("should accept a simple update by watch", function(done) {
 		var req = reqFactory(module, {
 			hot: true,
-			recursive: true,
 			watch: true,
-			watchDelay: 10
+			watchDelay: 200
 		});
 
 		var list = req("./fixtures/hot/counter");
@@ -165,19 +164,21 @@ describe("hot-replacement", function() {
 					list.should.be.eql([1, -1, 2]);
 					writeCounter(3);
 					setTimeout(function() {
-						list.should.be.eql([1, -1, 2, -2, 3]);
-						req.hot.stop();
-						done();
+						writeCounter(4);
+						setTimeout(function() {
+							list.should.be.eql([1, -1, 2, -2, 4]);
+							req.hot.stop();
+							done();
+						}, 300);
 					}, 100);
-				}, 100);
-			}, 100);
-		}, 100);
+				}, 1000);
+			}, 300);
+		}, 1000);
 	});
 
 	it("should wait for apply if applyOnUpdate = false", function(done) {
 		var req = reqFactory(module, {
 			hot: true,
-			recursive: true,
 			watch: true,
 			watchDelay: 10
 		});
@@ -216,6 +217,4 @@ describe("hot-replacement", function() {
 			}, 100);
 		}, 100);
 	});
-
-
 });

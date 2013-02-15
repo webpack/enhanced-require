@@ -1,12 +1,13 @@
 {
 	"name": "enhanced-require",
-	"version": "0.5.0",
+	"version": "0.5.0-beta1",
 	"author": "Tobias Koppers @sokra",
 	"description": "Enhance the require function in node.js with support for loaders which preprocess files and really async require (AMD). Enables Hot Code Replacement.",
 	"dependencies": {
 		"enhanced-resolve": "0.5.x",
-		"webpack-core": "0.5.x",
-		"clone": "0.0.x",
+		"webpack-core": "0.1.x",
+		"asnyc": "0.2.x",
+		"clone": "0.1.x",
 		"buffer-equal": "0.0.x"
 	},
 	"licenses": [

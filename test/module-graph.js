@@ -3,9 +3,7 @@ var path = require("path");
 var reqFactory = require("../");
 
 describe("module-graph", function() {
-	var req = reqFactory(module, {
-		recursive: true
-	});
+	var req = reqFactory(module);
 
 	var graphModule = req("./fixtures/graph");
 

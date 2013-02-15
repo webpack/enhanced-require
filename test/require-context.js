@@ -37,7 +37,7 @@ describe("require-context", function() {
 	it("should throw an exception if the module does not exists", function() {
 		(function() {
 			context("./notExists.js");
-		}).should.throw(/Module ".*?" not found/);
+		}).should.throw(/notExists\.js/);
 	});
 
 	it("should be able to use a loader in require.context", function() {
@@ -53,7 +53,9 @@ describe("require-context", function() {
 		var keys = context.keys();
 		should.exist(keys);
 		keys.should.be.eql([
+			"./a",
 			"./a.js",
+			"./b",
 			"./b.js"
 		]);
 	});
@@ -65,8 +67,50 @@ describe("require-context", function() {
 		var keys = context.keys();
 		should.exist(keys);
 		keys.should.be.eql([
+			"./a",
 			"./a.js",
+			"./b",
 			"./b.js"
+		]);
+	});
+
+	it("should be able to use context.keys() with RegExp", function() {
+		var context = req.context("./fixtures/graph", true, /^\.\/a/);
+		should.exist(context.keys);
+		context.keys.should.be.a("function");
+		var keys = context.keys();
+		should.exist(keys);
+		keys.should.be.eql([
+			"./a",
+			"./a.js"
+		]);
+	});
+
+	it("should be able to use context.keys() with RegExp, recursive = true", function() {
+		var context = req.context("./fixtures", true, /^\.\/graph/);
+		should.exist(context.keys);
+		context.keys.should.be.a("function");
+		var keys = context.keys();
+		should.exist(keys);
+		keys.should.be.eql([
+			"./graph",
+			"./graph.js",
+			"./graph/a",
+			"./graph/a.js",
+			"./graph/b",
+			"./graph/b.js"
+		]);
+	});
+
+	it("should be able to use context.keys() with RegExp, recursive = false", function() {
+		var context = req.context("./fixtures", false, /^\.\/graph/);
+		should.exist(context.keys);
+		context.keys.should.be.a("function");
+		var keys = context.keys();
+		should.exist(keys);
+		keys.should.be.eql([
+			"./graph",
+			"./graph.js"
 		]);
 	});
 

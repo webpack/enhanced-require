@@ -2,9 +2,7 @@ var should = require("should");
 var reqFactory = require("../");
 
 describe("require-recusive", function() {
-	var req = reqFactory(module, {
-		recursive: true
-	});
+	var req = reqFactory(module);
 
 	beforeEach(function() {
 		function clean(obj) {
