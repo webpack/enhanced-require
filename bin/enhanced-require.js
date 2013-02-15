@@ -7,8 +7,9 @@ file.push(path.resolve(file.pop()));
 
 var config = {};
 
+var existsSync = require("fs").existsSync || path.existsSync;
 var configFile = path.resolve("enhanced-require.config.js");
-if(require("fs").existsSync(configFile))
+if(existsSync(configFile))
 	config = require(configFile);
 
 require("../lib/require")(process.cwd(), config)(file.join("!"));
