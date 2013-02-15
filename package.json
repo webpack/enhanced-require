@@ -6,7 +6,7 @@
 	"dependencies": {
 		"enhanced-resolve": "0.5.x",
 		"webpack-core": "0.1.x",
-		"asnyc": "0.2.x",
+		"async": "0.2.x",
 		"clone": "0.1.x",
 		"buffer-equal": "0.0.x"
 	},
