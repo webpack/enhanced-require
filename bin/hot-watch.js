@@ -1,7 +1,8 @@
 #!/usr/bin/env node
 
 var path = require("path");
-var file = process.argv.splice(2, 1)[0].split("!");
+process.argv.splice(1, 1);
+var file = process.argv[1].split("!");
 
 file.push(path.resolve(file.pop()));
 
