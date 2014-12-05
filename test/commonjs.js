@@ -89,4 +89,17 @@ describe("commonjs", function() {
         done();
     });
 
+    it("should return an empty object if nothing is returned or set on 'module.exports' or 'exports'", function(done) {
+        var data = req('./fixtures/commonjs/wrappedEmpty');
+        data.should.be.a("object");
+        done();
+    });
+
+    it("should be able to return a falsy value", function(done) {
+        var data = req('./fixtures/commonjs/wrappedFalsy');
+        data.should.be.equal(false);
+        done();
+    });
+
+
 });
