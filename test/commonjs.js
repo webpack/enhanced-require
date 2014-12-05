@@ -77,4 +77,16 @@ describe("commonjs", function() {
 		fs.should.be.equal(require("fs"));
 	});
 
+    it("should define a module by returning a value from a define wrapper", function(done) {
+        var data = req('./fixtures/commonjs/wrappedReturn');
+        data.a.should.be.equal(1);
+        done();
+    });
+
+    it("should give priority to 'module.exports' or 'exports' instead of the value returned", function(done) {
+        var data = req('./fixtures/commonjs/wrappedReturnAndSetExports');
+        data.a.should.be.equal(1);
+        done();
+    });
+
 });
