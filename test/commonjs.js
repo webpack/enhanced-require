@@ -101,5 +101,19 @@ describe("commonjs", function() {
         done();
     });
 
+    it("should return an empty object when returns undefined", function(done) {
+        var data = req('./fixtures/commonjs/wrappedModuleExportsUndefined');
+        should.not.exist(data);
+        done();
+    });
+
+    it("should define a module with exports when wrapped", function(done) {
+        var data = req('./fixtures/commonjs/wrappedModuleExportsValue');
+        data.test.should.be.equal(1);
+        done();
+    });
+
+
+
 
 });
