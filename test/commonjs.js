@@ -77,4 +77,43 @@ describe("commonjs", function() {
 		fs.should.be.equal(require("fs"));
 	});
 
+    it("should define a module by returning a value from a define wrapper", function(done) {
+        var data = req('./fixtures/commonjs/wrappedReturn');
+        data.a.should.be.equal(1);
+        done();
+    });
+
+    it("should give priority to 'module.exports' or 'exports' instead of the value returned", function(done) {
+        var data = req('./fixtures/commonjs/wrappedReturnAndSetExports');
+        data.a.should.be.equal(1);
+        done();
+    });
+
+    it("should return an empty object if nothing is returned or set on 'module.exports' or 'exports'", function(done) {
+        var data = req('./fixtures/commonjs/wrappedEmpty');
+        data.should.be.a("object");
+        done();
+    });
+
+    it("should be able to return a falsy value", function(done) {
+        var data = req('./fixtures/commonjs/wrappedFalsy');
+        data.should.be.equal(false);
+        done();
+    });
+
+    it("should return an empty object when returns undefined", function(done) {
+        var data = req('./fixtures/commonjs/wrappedModuleExportsUndefined');
+        should.not.exist(data);
+        done();
+    });
+
+    it("should define a module with exports when wrapped", function(done) {
+        var data = req('./fixtures/commonjs/wrappedModuleExportsValue');
+        data.test.should.be.equal(1);
+        done();
+    });
+
+
+
+
 });
