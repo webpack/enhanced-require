@@ -14,14 +14,14 @@ Asynchron require functions are **really** async. They do not use the sync node.
 ## Create a enhanced require function
 
 ``` javascript
-var myRequire = require("enhanced-require")(module, {
+var bootstrap = require("enhanced-require")(module, {
 	// options
 	recursive: true // enable for all modules recursivly
 	// This replaces the original require function in loaded modules
 });
 
 // startup your application
-myRequire("./startup");
+bootstrap("./startup");
 ```
 
 ## Usage
@@ -29,6 +29,8 @@ myRequire("./startup");
 Than you can use them:
 
 ``` javascript
+// File: startup.js
+
 // use loaders
 var fileContent = require("raw!"+__filename);
 
